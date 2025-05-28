@@ -64,6 +64,9 @@ void ws2812_init(ws2812_config_t *ws2812_config) {
 void ws2812_send_bit(ws2812_config_t *ws2812_config, bool bit)
 {
     uint8_t index = 0;
+    // uint64_t start, end;
+
+    // start = time_us_64();
 
     if (bit) {
         // one
@@ -78,6 +81,10 @@ void ws2812_send_bit(ws2812_config_t *ws2812_config, bool bit)
         for (index = 0; index <= 10; index++)
             gpio_put(ws2812_config->pin, 0);
     }
+
+    // end = time_us_64();
+
+    // printf("ws2812_send_bit(%d) took %llu ns\n", bit, (end - start) * 1000);
 }
 
 void ws2812_send_color(ws2812_config_t *ws2812_config, uint32_t set_color)

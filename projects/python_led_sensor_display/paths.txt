@@ -1,0 +1,7 @@
+# Add Git to PATH
+export PATH=$PATH:/c/Program\ Files/Git/bin
+
+# Set Pico SDK path
+export PICO_SDK_PATH=~/pico/pico-sdk
+
+ export PICO_SDK_PATH=C:/msys64/home/bengu/pico/pico-sdk

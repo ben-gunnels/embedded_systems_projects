@@ -1,0 +1,18 @@
+[package]
+name = "pico-blinky"
+version = "0.1.0"
+edition = "2024"
+
+[build]
+target = "thumbv6m-none-eabi"
+
+[target.thumbv6m-none-eabi]
+runner = "probe-rs run"
+
+[dependencies]
+cortex-m = "0.7"
+cortex-m-rt = "0.7"
+embedded-hal = "1.0.0"
+rp2040-hal = "0.9"
+panic-halt = "0.2"
+
