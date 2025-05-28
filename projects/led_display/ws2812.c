@@ -1,7 +1,7 @@
 /**
  * MIT License
  * 
- * Copyright (c) 2024 My Techno Talent
+ * Copyright (c) 2025 Benjamin Gunnels
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,10 +28,13 @@
  * @brief Struct inits and functions for the ws2812 driver.
  * 
  * This contains the struct initializations and functions for the ws2812 driver 
- * for use with the Raspberry Pi Pico microcontroller board.
+ * for use with the Raspberry Pi Pico microcontroller board. Uses PIO on the board to 
+ * control the timing protocol necessary for the ws2812 LED.
+ * 
+ * Credit to Kevin Thomas @ My Techno Talent 04/11/2023 for inspiration on this code. 
  *
- * @author Kevin Thomas
- * @date   04/11/2023
+ * @author Benjamin Gunnels
+ * @date   05/20/2025
  */
 
 #include "ws2812.h"

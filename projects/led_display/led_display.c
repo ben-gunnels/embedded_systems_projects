@@ -1,7 +1,12 @@
 /**
- * Copyright (c) 2020 Raspberry Pi (Trading) Ltd.
+ * This program displays a variety of LED animations on a WS2812 RGB Led Panel.
+ * The WS2812, or Neopixel, uses precise timing of pulses to encode 1s and 0s. See lib/ws2812.pio to see the mechanism.
+ * Animations can be added or altered in lib/src/ws2812.c and then added to a mode in the LED reactor.
+ * 
+ * For convenience a remapped array can be used to interact with the LED array in a row, column format. The 
+ * remapping object in the LED reactor
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ * @author Benjamin Gunnels
  */
 
 #include "pico/stdlib.h"
