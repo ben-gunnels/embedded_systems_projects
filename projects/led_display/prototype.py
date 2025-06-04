@@ -31,35 +31,15 @@ def clear():
         strip[i] = no_color
     strip.show()
 
-def manage_brightness(color, brightness):
-    r = int(color[0]*brightness)
-    g = int(color[1]*brightness)
-    b = int(color[2]*brightness)
+def rgb_color(r, g, b, brightness):
+    r = int(r * brightness)
+    g = int(g * brightness)
+    b = int(b * brightness)
     return (r, g, b)
 
-# Function to simulate PWM by adjusting brightness
-def pwm_brightness(color, brightness, duration=2):
-    brightness = max(0, min(1, brightness))  # Constrain brightness between 0.0 and 1.0
 
-    for _ in range(int(duration * 50)):  # 50 cycles per second
-        # On cycle (brightness % of the time)
-        for i in range(NUM_LEDS):
-            np[i] = (
-                int(color[0] * brightness),
-                int(color[1] * brightness),
-                int(color[2] * brightness)
-            )
-        np.write()
-        sleep(brightness / 50)  # On time
-
-        # Off cycle (remaining time)
-        for i in range(NUM_LEDS):
-            np[i] = (0, 0, 0)
-        np.write()
-        sleep((1 - brightness) / 50)  # Off time
-        
 def big_unit(frame, brightness):
-    yellow = manage_brightness((255, 255, 0), 0.3)
+    yellow = rgb_color(255, 255, 0, 0.3)
     def left_nut(x, y):
         return (x-4)*(x-4) + (y-12)*(y-12), 9 # Bounds, radius
     
@@ -83,11 +63,11 @@ def aurora(frame: list, i, brightness=1.0):
     """
         Builds an aurora based on 3 sin waves.
     """
-    background_blue_dark = manage_brightness((4, 3, 9), brightness)
-    majestic_purple      = manage_brightness((9, 7, 23), brightness)
-    pink 				 = manage_brightness((26, 2, 16), brightness)
-    aurora_green 		 = manage_brightness((5, 24, 17), brightness)
-    bright_green 		 = manage_brightness((13, 23, 13), brightness)
+    background_blue_dark = rgb_color(4, 3, 9, brightness)
+    majestic_purple      = rgb_color(9, 7, 23, brightness)
+    pink 				 = rgb_color(26, 2, 16, brightness)
+    aurora_green 		 = rgb_color(5, 24, 17, brightness)
+    bright_green 		 = rgb_color(13, 23, 13, brightness)
     
     def line1(x, ps):
         return int(ROWS - (3*math.sin((1/5) * x + ps) + 13))
@@ -127,13 +107,13 @@ def aurora(frame: list, i, brightness=1.0):
             
 def noahs_rainbow(frame, i, brightness):
     # Defining Rainbow Colors with Brightness Control (0.3 = 30% brightness)
-    red = manage_brightness((255, 0, 0), brightness)
-    orange = manage_brightness((255, 165, 0), brightness)
-    yellow = manage_brightness((255, 255, 0), brightness)
-    green = manage_brightness((0, 255, 0), brightness)
-    blue = manage_brightness((0, 0, 255), brightness)
-    indigo = manage_brightness((75, 0, 130), brightness)
-    violet = manage_brightness((138, 43, 226), brightness)
+    red = rgb_color(255, 0, 0, brightness)
+    orange = rgb_color(255, 165, 0, brightness)
+    yellow = rgb_color(255, 255, 0, brightness)
+    green = rgb_color(0, 255, 0, brightness)
+    blue = rgb_color(0, 0, 255, brightness)
+    indigo = rgb_color(75, 0, 130, brightness)
+    violet = rgb_color(138, 43, 226, brightness)
     
     rainbow = [red, indigo, orange, green, blue, yellow, violet]
     
@@ -152,8 +132,8 @@ def noahs_rainbow(frame, i, brightness):
         current = increment_current(current)
              
 def melancholic_rain(frame: list, j, brightness):
-    dark_blue = manage_brightness((20, 20, 20), brightness)
-    dark_purple = manage_brightness((82, 35, 252), brightness)
+    dark_blue = rgb_color(20, 20, 20, brightness)
+    dark_purple = rgb_color(82, 35, 252, brightness)
 
     raindrop_width = 1
 
@@ -185,9 +165,9 @@ def melancholic_rain(frame: list, j, brightness):
         time.sleep(0.01)
         
 def police_lights(frame: list, i, brightness):
-    red = manage_brightness((255,0,0), brightness)
-    white = manage_brightness((255, 255, 255), brightness)
-    blue = manage_brightness((0, 0, 255), brightness)
+    red = rgb_color(255,0,0, brightness)
+    white = rgb_color(255, 255, 255, brightness)
+    blue = rgb_color(0, 0, 255, brightness)
     
     for row in range(ROWS):
         for col in range(COLS):
@@ -201,8 +181,8 @@ def police_lights(frame: list, i, brightness):
                 
         
 def chessboard(frame: list, i, brightness):
-    forest_emerald = manage_brightness((0, 220, 30), brightness)
-    crimson_velvet = manage_brightness((120, 0, 20), brightness)
+    forest_emerald = rgb_color(0, 220, 30, brightness)
+    crimson_velvet = rgb_color(120, 0, 20, brightness)
 
     choose = i % 2
 
@@ -222,8 +202,8 @@ def chessboard(frame: list, i, brightness):
             strip[frame[row][col]] = color
             
 def beating_heart(frame: list, i, brightness):
-    red = manage_brightness((255, 0, 0), brightness)
-    baby_blue = manage_brightness((137, 207, 240), brightness)
+    red = rgb_color(255, 0, 0, brightness)
+    baby_blue = rgb_color(137, 207, 240, brightness)
 
     def left_atrium(x, expansion):
         return (1/2)*(x-5)*(x-7) + 5 - expansion
@@ -256,6 +236,24 @@ def beating_heart(frame: list, i, brightness):
             else:
                 strip[frame[row][col]] = baby_blue
 
+def hello_lf(frame: list, i, brightness):
+    letter_color = rgb_color(255, 255, 255, brightness)
+    letter_width = 4
+    letter_height = 4
+
+    def hello(start_x, start_y):
+        # H
+        for row in range(start_y, start_y + letter_height):
+            frame[row][start_x] = letter_color
+
+        for col in range(start_x, start_x + letter_width):
+            frame[(start_y + letter_height) // 2][col] = letter_color
+
+        start_x += letter_width
+
+        for row in range(start_y, start_y + letter_height):
+            frame[row][start_x] = letter_color
+    hello(2, 4)
     
 remapped_leds = remap_leds()
 
@@ -265,7 +263,7 @@ while True:
     if i % 2000 == 0:
         i = 0 # Reset the counter
         clear() # Clear less frequently
-    beating_heart(remapped_leds, i, 0.01)
+    hello_lf(remapped_leds, i, 0.01)
     strip.show() 
     i += 1
     time.sleep(0.3)
